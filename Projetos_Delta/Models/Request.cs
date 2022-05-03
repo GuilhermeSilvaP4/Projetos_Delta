@@ -2,24 +2,24 @@
 
 public class Request
 {
-    public int ID { get; set; }
+    public int Id { get; set; }
 
-    public int RequestNuber { get; set; }
+    public int RequestNumber { get; set; }
     public string Name  { get; set; }
 
     public DateTime Date { get; set; }
 
-    public Projeto projeto { get; set; }
+    public ICollection<Project> Projects { get; set; }
 
     public Request()
     {
     
     }
 
-    public Request(int iD, int requestNuber, string? name, DateTime date)
+    public Request(int requestNumber, string name, DateTime date)
     {
-        ID = iD;
-        RequestNuber = requestNuber;
+      
+        RequestNumber = requestNumber;
         Name = name;
         Date = date;
     }

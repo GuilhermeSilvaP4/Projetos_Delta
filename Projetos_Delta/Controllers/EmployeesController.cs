@@ -22,7 +22,7 @@ namespace Projetos_Delta.Controllers
         // GET: Employees
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employee.ToListAsync());
+            return View(await _context.Employees.ToListAsync());
         }
 
         // GET: Employees/Details/5
@@ -33,8 +33,8 @@ namespace Projetos_Delta.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employee
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var employee = await _context.Employees
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
             {
                 return NotFound();
@@ -73,7 +73,7 @@ namespace Projetos_Delta.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employee.FindAsync(id);
+            var employee = await _context.Employees.FindAsync(id);
             if (employee == null)
             {
                 return NotFound();
@@ -88,7 +88,7 @@ namespace Projetos_Delta.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Email,Departamento")] Employee employee)
         {
-            if (id != employee.ID)
+            if (id != employee.Id)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace Projetos_Delta.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.ID))
+                    if (!EmployeeExists(employee.Id))
                     {
                         return NotFound();
                     }
@@ -124,8 +124,8 @@ namespace Projetos_Delta.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employee
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var employee = await _context.Employees
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
             {
                 return NotFound();
@@ -139,15 +139,15 @@ namespace Projetos_Delta.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employee.FindAsync(id);
-            _context.Employee.Remove(employee);
+            var employee = await _context.Employees.FindAsync(id);
+            _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EmployeeExists(int id)
         {
-            return _context.Employee.Any(e => e.ID == id);
+            return _context.Employees.Any(e => e.Id == id);
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projetos_Delta.Data;
 
@@ -11,9 +12,10 @@ using Projetos_Delta.Data;
 namespace Projetos_Delta.Migrations
 {
     [DbContext(typeof(Projetos_DeltaContext))]
-    partial class Projetos_DeltaContextModelSnapshot : ModelSnapshot
+    [Migration("20220503040137_forty")]
+    partial class forty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,12 +29,12 @@ namespace Projetos_Delta.Migrations
                     b.Property<int>("EmployeesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProjectsId")
+                    b.Property<int>("ProjectsID")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeesId", "ProjectsId");
+                    b.HasKey("EmployeesId", "ProjectsID");
 
-                    b.HasIndex("ProjectsId");
+                    b.HasIndex("ProjectsID");
 
                     b.ToTable("EmployeeProject");
                 });
@@ -62,11 +64,11 @@ namespace Projetos_Delta.Migrations
 
             modelBuilder.Entity("Projetos_Delta.Models.Project", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -74,7 +76,7 @@ namespace Projetos_Delta.Migrations
                     b.Property<int>("RequestId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("RequestId");
 
@@ -118,7 +120,7 @@ namespace Projetos_Delta.Migrations
 
                     b.HasOne("Projetos_Delta.Models.Project", null)
                         .WithMany()
-                        .HasForeignKey("ProjectsId")
+                        .HasForeignKey("ProjectsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

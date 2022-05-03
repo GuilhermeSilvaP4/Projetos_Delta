@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projetos_Delta.Data;
 
@@ -11,9 +12,10 @@ using Projetos_Delta.Data;
 namespace Projetos_Delta.Migrations
 {
     [DbContext(typeof(Projetos_DeltaContext))]
-    partial class Projetos_DeltaContextModelSnapshot : ModelSnapshot
+    [Migration("20220503041122_fifty")]
+    partial class fifty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -10,11 +10,11 @@ using Projetos_Delta.Models;
 
 namespace Projetos_Delta.Controllers
 {
-    public class ProjetosController : Controller
+    public class ProjectsController : Controller
     {
         private readonly Projetos_DeltaContext _context;
 
-        public ProjetosController(Projetos_DeltaContext context)
+        public ProjectsController(Projetos_DeltaContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace Projetos_Delta.Controllers
         // GET: Projetos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Projeto.ToListAsync());
+            return View(await _context.Projetos.ToListAsync());
         }
 
         // GET: Projetos/Details/5
@@ -33,8 +33,8 @@ namespace Projetos_Delta.Controllers
                 return NotFound();
             }
 
-            var projeto = await _context.Projeto
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var projeto = await _context.Projetos
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (projeto == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace Projetos_Delta.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] Projeto projeto)
+        public async Task<IActionResult> Create([Bind("ID,Name")] Project projeto)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace Projetos_Delta.Controllers
                 return NotFound();
             }
 
-            var projeto = await _context.Projeto.FindAsync(id);
+            var projeto = await _context.Projetos.FindAsync(id);
             if (projeto == null)
             {
                 return NotFound();
@@ -86,9 +86,9 @@ namespace Projetos_Delta.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Projeto projeto)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Project projeto)
         {
-            if (id != projeto.ID)
+            if (id != projeto.Id)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace Projetos_Delta.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProjetoExists(projeto.ID))
+                    if (!ProjetoExists(projeto.Id))
                     {
                         return NotFound();
                     }
@@ -124,8 +124,8 @@ namespace Projetos_Delta.Controllers
                 return NotFound();
             }
 
-            var projeto = await _context.Projeto
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var projeto = await _context.Projetos
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (projeto == null)
             {
                 return NotFound();
@@ -139,15 +139,15 @@ namespace Projetos_Delta.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var projeto = await _context.Projeto.FindAsync(id);
-            _context.Projeto.Remove(projeto);
+            var projeto = await _context.Projetos.FindAsync(id);
+            _context.Projetos.Remove(projeto);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProjetoExists(int id)
         {
-            return _context.Projeto.Any(e => e.ID == id);
+            return _context.Projetos.Any(e => e.Id == id);
         }
     }
 }

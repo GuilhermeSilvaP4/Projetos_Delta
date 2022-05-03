@@ -22,7 +22,7 @@ namespace Projetos_Delta.Controllers
         // GET: Requests
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Request.ToListAsync());
+            return View(await _context.Requests.ToListAsync());
         }
 
         // GET: Requests/Details/5
@@ -33,8 +33,8 @@ namespace Projetos_Delta.Controllers
                 return NotFound();
             }
 
-            var request = await _context.Request
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var request = await _context.Requests
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (request == null)
             {
                 return NotFound();
@@ -73,7 +73,7 @@ namespace Projetos_Delta.Controllers
                 return NotFound();
             }
 
-            var request = await _context.Request.FindAsync(id);
+            var request = await _context.Requests.FindAsync(id);
             if (request == null)
             {
                 return NotFound();
@@ -86,9 +86,9 @@ namespace Projetos_Delta.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,RequestNuber,Name,Date")] Request request)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestNumber,Name,Date")] Request request)
         {
-            if (id != request.ID)
+            if (id != request.Id)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace Projetos_Delta.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RequestExists(request.ID))
+                    if (!RequestExists(request.Id))
                     {
                         return NotFound();
                     }
@@ -124,8 +124,8 @@ namespace Projetos_Delta.Controllers
                 return NotFound();
             }
 
-            var request = await _context.Request
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var request = await _context.Requests
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (request == null)
             {
                 return NotFound();
@@ -139,15 +139,15 @@ namespace Projetos_Delta.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var request = await _context.Request.FindAsync(id);
-            _context.Request.Remove(request);
+            var request = await _context.Requests.FindAsync(id);
+            _context.Requests.Remove(request);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RequestExists(int id)
         {
-            return _context.Request.Any(e => e.ID == id);
+            return _context.Requests.Any(e => e.Id == id);
         }
     }
 }

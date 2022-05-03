@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projetos_Delta.Data;
 
@@ -11,9 +12,10 @@ using Projetos_Delta.Data;
 namespace Projetos_Delta.Migrations
 {
     [DbContext(typeof(Projetos_DeltaContext))]
-    partial class Projetos_DeltaContextModelSnapshot : ModelSnapshot
+    [Migration("20220503014218_Second")]
+    partial class Second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,86 +26,85 @@ namespace Projetos_Delta.Migrations
 
             modelBuilder.Entity("EmployeeProject", b =>
                 {
-                    b.Property<int>("EmployeesId")
+                    b.Property<int>("EmployeesID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProjectsId")
+                    b.Property<int>("ProjectsID")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeesId", "ProjectsId");
+                    b.HasKey("EmployeesID", "ProjectsID");
 
-                    b.HasIndex("ProjectsId");
+                    b.HasIndex("ProjectsID");
 
                     b.ToTable("EmployeeProject");
                 });
 
             modelBuilder.Entity("Projetos_Delta.Models.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("Departamento")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Employee", (string)null);
                 });
 
             modelBuilder.Entity("Projetos_Delta.Models.Project", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RequestId");
+                    b.HasKey("ID");
 
                     b.ToTable("Projeto", (string)null);
                 });
 
             modelBuilder.Entity("Projetos_Delta.Models.Request", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EmployeeId")
+                    b.Property<int?>("EmployeeID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RequestNumber")
+                    b.Property<int>("RequestNuber")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int?>("projectID")
+                        .HasColumnType("int");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasKey("ID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.HasIndex("projectID");
 
                     b.ToTable("Request", (string)null);
                 });
@@ -112,33 +113,28 @@ namespace Projetos_Delta.Migrations
                 {
                     b.HasOne("Projetos_Delta.Models.Employee", null)
                         .WithMany()
-                        .HasForeignKey("EmployeesId")
+                        .HasForeignKey("EmployeesID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Projetos_Delta.Models.Project", null)
                         .WithMany()
-                        .HasForeignKey("ProjectsId")
+                        .HasForeignKey("ProjectsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Projetos_Delta.Models.Project", b =>
-                {
-                    b.HasOne("Projetos_Delta.Models.Request", "Request")
-                        .WithMany("Projects")
-                        .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Request");
                 });
 
             modelBuilder.Entity("Projetos_Delta.Models.Request", b =>
                 {
                     b.HasOne("Projetos_Delta.Models.Employee", null)
                         .WithMany("Requests")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("EmployeeID");
+
+                    b.HasOne("Projetos_Delta.Models.Project", "project")
+                        .WithMany("Request")
+                        .HasForeignKey("projectID");
+
+                    b.Navigation("project");
                 });
 
             modelBuilder.Entity("Projetos_Delta.Models.Employee", b =>
@@ -146,9 +142,9 @@ namespace Projetos_Delta.Migrations
                     b.Navigation("Requests");
                 });
 
-            modelBuilder.Entity("Projetos_Delta.Models.Request", b =>
+            modelBuilder.Entity("Projetos_Delta.Models.Project", b =>
                 {
-                    b.Navigation("Projects");
+                    b.Navigation("Request");
                 });
 #pragma warning restore 612, 618
         }

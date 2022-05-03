@@ -14,10 +14,17 @@ namespace Projetos_Delta.Data
         {
         }
 
-        public DbSet<Projetos_Delta.Models.Employee> Employee { get; set; }
+        public DbSet<Projetos_Delta.Models.Employee> Employees { get; set; }
 
-        public DbSet<Projetos_Delta.Models.Projeto> Projeto { get; set; }
+        public DbSet<Projetos_Delta.Models.Project> Projetos { get; set; }
 
-        public DbSet<Projetos_Delta.Models.Request> Request { get; set; }
+        public DbSet<Projetos_Delta.Models.Request> Requests { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Employee>().ToTable("Employee");
+            modelBuilder.Entity<Request>().ToTable("Request");
+            modelBuilder.Entity<Project>().ToTable("Projeto");
+        }
     }
 }
